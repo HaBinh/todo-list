@@ -66,11 +66,13 @@ export class TasksComponent implements OnInit {
 
   toggleTaskComplete(task) {
     this.tasksService.toggleTaskComplete(task)
-              .then(() => {
-                task.complete = true;
-                this.dones.push(task);
-                this.tasks = this.tasks.filter(v => v.id !== task.id);
-              });
+              .then(res => {
+                if (res.ok){
+                  task.complete = true;
+                  this.dones.push(task);
+                  console.log(res, this.dones);
+                  this.tasks = this.tasks.filter(v => v.id !== task.id);
+                }});
   }
 
   removeTask(task) {

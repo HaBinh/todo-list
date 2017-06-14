@@ -60,6 +60,18 @@ export class ListsService {
                .catch(this.handleError);
   }
 
+  searchLists(search: string): Promise<any>{
+    const url = this.listsUrl + "lists.json?search=" + search;
+    return this.http
+               .get(url)
+               .toPromise()
+               .then(res => {
+                 console.log(res.json());
+                 return res.json().lists as List[];
+               })
+               .catch(this.handleError);
+  }
+
   // XU LY ... bat dong bo???
   getTitleById(id: number): string{
     let tmp: string;

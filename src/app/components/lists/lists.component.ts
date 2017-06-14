@@ -18,7 +18,7 @@ export class ListsComponent implements OnInit {
   listEditing = -1;
   loading = true;
   lists : List[];
-
+  search: string;
   constructor(
     private router: Router,
     private ListService: ListsService,
@@ -71,6 +71,14 @@ export class ListsComponent implements OnInit {
 
   getList(){
     this.ListService.getLists()
+              .then(lists => {
+                this.lists = lists;
+              })
+              .catch(error => this.error = error);
+  }
+
+  searchLists(search: string){
+    this.ListService.searchLists(search)
               .then(lists => {
                 this.lists = lists;
               })

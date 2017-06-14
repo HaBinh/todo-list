@@ -3,13 +3,22 @@ section {
   max-width: 600px;
   margin: auto;
   margin-bottom: 80px;
-  margin-top: 80px;
+  margin-top: 90px;
   padding: 30px;
   font-size: 18px;
   line-height: 22px;
   background: white;
   border-radius: 8px;
   box-shadow: 10px 10px 5px #888888;
+}
+
+.search{
+  margin: 40px;
+}
+
+.search button{
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 form div{

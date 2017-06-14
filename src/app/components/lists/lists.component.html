@@ -1,3 +1,4 @@
+
 <section>
   <form [formGroup]="form" (ngSubmit)="addList()">
     <div>
@@ -8,7 +9,7 @@
       <button [disabled]="form.invalid" class="btn-add-task-list">Add List</button>
     </div>
   </form>
-
+  
   <ul>
     <li *ngFor="let list of lists" >
       <div class="view" *ngIf="list.id != listEditing" (click)="goTasks(list.id)">
@@ -26,6 +27,12 @@
         value={{list.title}}>
     </li>
   </ul>
+  <div class="search">
+    <input type="search" name="" class="form-control" placeholder="Search list tasks..."
+    [(ngModel)]="search" (keyup.enter)="searchLists(search)">
+    <button (click) = "searchLists(search)" class="btn btn-primary" >Result</button>
+    <button (click) = "searchLists('')" class="btn btn-primary" >All lists</button>
+  </div>
 </section>
 
 <ng-template #loading_template>

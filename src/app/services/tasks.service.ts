@@ -60,6 +60,7 @@ export class TasksService {
     return this.http
                .patch(url, JSON.stringify(task.id), { headers: this.headers })
                .toPromise()
+               .then(res => {console.log(res);return res})
                .catch(this.handleError);
   }
 
