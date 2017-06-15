@@ -35,19 +35,22 @@ export class TasksComponent implements OnInit {
 
   getAllTasksByListId(){
     this.route.params
-                .subscribe(params => {
-                  this.listId = +params.id;
-                  this.tasksService.getAllTasksByListId(this.listId)
-                      .then(t => {
-                        this.tasks = t;
-                        this.dones = this.tasks.filter(v => v.complete);
-                        this.tasks = this.tasks.filter(v => !v.complete);
-                        this.isReady = true;
-                      })
-                      .catch(error => this.error = error);
-               })
-    // this.listTitle = this.listsService.getTitleById(this.listId);                                          
-                        // console.log(this.listTitle);
+        .subscribe(params => {
+          this.listId = +params.id;
+          this.tasksService.getListTitle(this.listId)
+              .then(title =>{
+                this.listTitle = title;
+                console.log(this.listTitle);
+              })
+          this.tasksService.getAllTasksByListId(this.listId)
+              .then(t => {
+                    this.tasks = t;
+                    this.dones = this.tasks.filter(v => v.complete);
+                    this.tasks = this.tasks.filter(v => !v.complete);
+                    this.isReady = true;
+              })
+              .catch(error => this.error = error);
+       })
   }
 
   addTask() {

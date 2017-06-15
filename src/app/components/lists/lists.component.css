@@ -11,14 +11,22 @@ section {
   border-radius: 8px;
   box-shadow: 10px 10px 5px #888888;
 }
-
+section h3{
+  text-align: center;
+}
 .search{
-  margin: 40px;
+  padding: 40px;
+  margin-top: 55px;
+  padding-right: 100px;
 }
 
-.search button{
-  margin-top: 10px;
-  margin-left: 10px;
+.spinner{
+  margin: 20px;
+  text-align:  center;
+}
+
+.results{
+  padding-right: 30px;
 }
 
 form div{

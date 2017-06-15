@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class TasksService {
+  private localUrl = 'http://localhost:3000/';
   private tasksUrl = 'https://radiant-taiga-44344.herokuapp.com/';
   private headers = new Headers({
       'Content-Type': 'application/json'
@@ -22,7 +23,15 @@ export class TasksService {
                 }) 
                 .catch(this.handleError);
   }
-
+  getListTitle(list_id: number): Promise<any> {
+    const url = this.tasksUrl + "lists/" + list_id + ".json";
+    return this.http.get(url)
+                .toPromise()
+                .then(res => {
+                  return res.json().list.list_title;
+                }) 
+                .catch(this.handleError);
+  }
   // Simulate POST /tasks
   addTask(task: Tasks): Promise<Response> {
     let keys: string = [

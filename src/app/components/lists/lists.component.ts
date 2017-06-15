@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, CanDeactivate } from '@angular/router';
+import * as Rx from 'rxjs/Rx';
+import 'rxjs/add/operator/debounceTime';
+import { Subject, Observable, BehaviorSubject } from "rxjs";
 
 import { List } from "../../models/list.model";
 import { ListsService } from '../../services/lists.service';
@@ -14,16 +17,24 @@ import { ListsService } from '../../services/lists.service';
 export class ListsComponent implements OnInit {
   newList: List = new List();
   form: FormGroup;
+  formSearch: FormGroup;
   error: any;
   listEditing = -1;
   loading = true;
   lists : List[];
   search: string;
+  searchs: List[]; //Results
+  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  header: string;
+
   constructor(
     private router: Router,
     private ListService: ListsService,
     fb: FormBuilder
-  ) {
+  ) { 
+      this.formSearch = fb.group({
+        search: []
+      });
       this.form = fb.group({
         newListTitle: [ '', Validators.compose([ Validators.required ]) ]
       })
@@ -31,6 +42,7 @@ export class ListsComponent implements OnInit {
 
   ngOnInit() {
     this.getList();
+    this.searchLists();
   }
 
   deleteList(list: List, event: Event) {
@@ -44,9 +56,11 @@ export class ListsComponent implements OnInit {
   }
   
   addList() {
+    this.loading = true;
     this.ListService.addList(this.newList)
         .then(() => {
                 this.getList();
+                this.loading = false;
                 this.newList = new List();
             });
   }
@@ -72,14 +86,7 @@ export class ListsComponent implements OnInit {
   getList(){
     this.ListService.getLists()
               .then(lists => {
-                this.lists = lists;
-              })
-              .catch(error => this.error = error);
-  }
-
-  searchLists(search: string){
-    this.ListService.searchLists(search)
-              .then(lists => {
+                this.loading = false;
                 this.lists = lists;
               })
               .catch(error => this.error = error);
@@ -89,4 +96,27 @@ export class ListsComponent implements OnInit {
     this.router.navigate(['/lists', id]);
   }
 
+  searchLists(){
+    var search = this.formSearch.get('search');
+    search.valueChanges
+          .do (() => this.loading$.next(true))
+          .debounceTime(450)
+          .subscribe((query: string) => {
+            if (query !== ""){
+              this.ListService.searchLists(query)
+                  .then(res => {
+                      this.loading$.next(false);
+                      this.searchs = res.lists; 
+                      if (this.searchs.length === 0) this.header = "No result."
+                      else if (this.searchs.length === 1) this.header = "1 result:"
+                      else this.header = `${this.searchs.length} results:`
+               })
+            }
+            else {
+              this.loading$.next(false);
+              this.searchs = [];
+              this.header = "";
+            }
+          })
+    }
 }

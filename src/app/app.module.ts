@@ -11,6 +11,7 @@ import {
   LocationStrategy,
   HashLocationStrategy
 } from '@angular/common';
+import {MdProgressBarModule, MdButtonModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { TasksComponent } from './components/tasks/tasks.component';
@@ -33,7 +34,9 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    MdButtonModule,
+    MdProgressBarModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -1,1 +1,14 @@
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <a href="/todo-list" id="logo">Todo App</a>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a [routerLink]="['/lists']">Task Lists</a>
+      </li>
+      <li>
+        <a routerLink="/">Log in</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <router-outlet></router-outlet>

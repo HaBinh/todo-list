@@ -1,41 +1,61 @@
-
-<section>
-  <form [formGroup]="form" (ngSubmit)="addList()">
-    <div>
-      <input 
-        type="text" placeholder="Create a list tasks..."
-        formControlName="newListTitle"
-        [(ngModel)]="newList.title">
-      <button [disabled]="form.invalid" class="btn-add-task-list">Add List</button>
-    </div>
-  </form>
-  
-  <ul>
-    <li *ngFor="let list of lists" >
-      <div class="view" *ngIf="list.id != listEditing" (click)="goTasks(list.id)">
-        <label>{{list.title}}</label>
-        <i class="fa fa-trash pull-right" (click)="deleteList(list, $event)"></i>  
-        <i class="fa fa-pencil pull-right" (click)="changeToEdit(list, $event)"></i>
+<div class="container">
+  <div class="search col-md-5">
+    <h4>Search lists</h4>
+    <form [formGroup]="formSearch">
+      <input type="search" formControlName="search" class="form-control" placeholder="Type anything...">
+    </form>
+    <div *ngIf="(loading$ | async)" class="col-md-12">
+      <div class="spinner">
+        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
       </div>
-
-      <input 
-        *ngIf="list.id == listEditing"
-        type="text"
-        #textList
-        (keyup.enter)="editList(textList.value, list, $event)"
-        (keyup.escape)="revertEdit()" 
-        value={{list.title}}>
-    </li>
-  </ul>
-  <div class="search">
-    <input type="search" name="" class="form-control" placeholder="Search list tasks..."
-    [(ngModel)]="search" (keyup.enter)="searchLists(search)">
-    <button (click) = "searchLists(search)" class="btn btn-primary" >Result</button>
-    <button (click) = "searchLists('')" class="btn btn-primary" >All lists</button>
+    </div>
+    
+    <div *ngIf="!((loading$ | async))" class="results">
+      <ul>
+        <h4>{{header}}</h4>
+        <li *ngFor="let list of searchs" >
+          <div class="view" (click)="goTasks(list.id)">
+            <label>{{list.title}}</label>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
-</section>
 
-<ng-template #loading_template>
-  <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-  <span class="sr-only">Loading...</span>
-</ng-template>
+  <section class="col-md-6">
+    <h3>Task List</h3>
+    <form [formGroup]="form" (ngSubmit)="addList()">
+      <div>
+        <input 
+          type="text" placeholder="Create a list tasks..."
+          formControlName="newListTitle"
+          [(ngModel)]="newList.title">
+        <button [disabled]="form.invalid" class="btn-add-task-list">Add List</button>
+      </div>
+    </form>
+    <div *ngIf="loading">
+      <div class="spinner">
+        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <ul>
+      <li *ngFor="let list of lists" >
+        <div class="view" *ngIf="list.id != listEditing" (click)="goTasks(list.id)">
+          <label>{{list.title}}</label>
+          <i class="fa fa-trash pull-right" (click)="deleteList(list, $event)"></i>  
+          <i class="fa fa-pencil pull-right" (click)="changeToEdit(list, $event)"></i>
+        </div>
+
+        <input 
+          *ngIf="list.id == listEditing"
+          type="text"
+          #textList
+          (keyup.enter)="editList(textList.value, list, $event)"
+          (keyup.escape)="revertEdit()" 
+          value={{list.title}}>
+      </li>
+    </ul>
+  </section>
+</div>
