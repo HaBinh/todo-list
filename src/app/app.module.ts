@@ -1,25 +1,28 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import {
-  RouterModule,
-  Routes
-} from '@angular/router';
-import {
-  APP_BASE_HREF,
-  LocationStrategy,
-  HashLocationStrategy
-} from '@angular/common';
-import {MdProgressBarModule, MdButtonModule} from '@angular/material';
+import { BrowserModule }        from '@angular/platform-browser';
+import { NgModule }             from '@angular/core';
+import { FormsModule, 
+         ReactiveFormsModule }  from '@angular/forms';
+import { HttpModule }           from '@angular/http';
+import { RouterModule,
+         Routes }               from '@angular/router';
+import { APP_BASE_HREF,
+         LocationStrategy,
+         HashLocationStrategy } from '@angular/common';
+import { MdProgressBarModule, 
+         MdButtonModule }       from '@angular/material';
 
-import { AppComponent } from './app.component';
-import { TasksComponent } from './components/tasks/tasks.component';
-import { ListsComponent } from './components/lists/lists.component';
+import { AppComponent }         from './app.component';
+import { TasksComponent }       from './components/tasks/tasks.component';
+import { ListsComponent }       from './components/lists/lists.component';
+import { HomeComponent }        from './components/home/home.component';
+import { SignupComponent }      from './components/user/signup/signup.component';
+import { LoginComponent }       from './components/user/login/login.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/lists', pathMatch: 'full'},
-    { path: 'lists',    component: ListsComponent },
+    { path: '',          component: HomeComponent},
+    { path: 'signup',    component: SignupComponent},
+    { path: 'login',     component: LoginComponent},
+    { path: 'lists',     component: ListsComponent },
     { path: 'lists/:id', component: TasksComponent }
 ];
 
@@ -27,7 +30,10 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     ListsComponent,
-    TasksComponent
+    TasksComponent,
+    HomeComponent,
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
