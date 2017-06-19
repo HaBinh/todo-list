@@ -2,14 +2,20 @@
   <div class="container">
     <a href="/todo-list" id="logo">Todo App</a>
     <ul class="nav navbar-nav navbar-right">
-      <li>
-        <a [routerLink]="['/lists']">Task Lists</a>
-      </li>
-      <li>
+      <li *ngIf="!authToken.userSignedIn$">
         <a routerLink="/login">Log in</a>
-      </li><li>
+      </li>
+      <li *ngIf="!authToken.userSignedIn$">
         <a routerLink="/signup">Sign up</a>
       </li>
+
+      <li *ngIf="authToken.userSignedIn$">
+        <a [routerLink]="['/lists']">Task Lists</a>
+      </li>
+      <li *ngIf="authToken.userSignedIn$">
+        <a (click)="logOut()">Log out</a>
+      </li>
+
     </ul>
   </div>
 </nav>

@@ -10,6 +10,8 @@ import { APP_BASE_HREF,
          HashLocationStrategy } from '@angular/common';
 import { MdProgressBarModule, 
          MdButtonModule }       from '@angular/material';
+import { Angular2TokenService } from 'angular2-token';
+import {AuthService}            from "./services/auth.service";
 
 import { AppComponent }         from './app.component';
 import { TasksComponent }       from './components/tasks/tasks.component';
@@ -46,7 +48,9 @@ const routes: Routes = [
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: APP_BASE_HREF, useValue: '/' }
+    { provide: APP_BASE_HREF, useValue: '/' },
+    Angular2TokenService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
