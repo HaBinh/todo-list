@@ -48,12 +48,7 @@
                                 [disabled]="!(f.valid) || !(signUpUser.password == signUpUser.passwordConfirmation)">
                     </div>
                     <app-error-label [control]="f"></app-error-label>
-<div *ngIf="(loading$ | async)" class="col-md-12">
-  <div class="spinner">
-    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
+
                     <div class="hr"></div>
                     <div class="foot-lnk">
                         <a [routerLink] =  "['/login']">Already Member?</a>
