@@ -1,0 +1,20 @@
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <a href="/todo-list" id="logo">Todo App</a>
+    <ul class="nav navbar-nav navbar-right">
+      <li *ngIf="!(authService.userSignedIn$ | async)">
+        <a routerLink="/login">Log in</a>
+      </li>
+      <li *ngIf="!(authService.userSignedIn$ | async)">
+        <a routerLink="/signup">Sign up</a>
+      </li>
+
+      <li *ngIf="(authService.userSignedIn$ | async)">
+        <a [routerLink]="['/lists']">Task Lists</a>
+      </li>
+      <li *ngIf="(authService.userSignedIn$ | async)">
+        <a (click)="logOut()">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>

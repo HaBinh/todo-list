@@ -3,7 +3,10 @@
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Log In</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up"><a [routerLink] =  "['/signup']" class="tab">Sign Up</a>
         <div class="login-form">
-            <form (ngSubmit)="onSignInSubmit()" #f="ngForm">
+            <form (ngSubmit)="onSignInSubmit()" [formGroup]="f">
+                <div *ngIf="loading">
+                    <md-progress-bar mode="query"></md-progress-bar>
+                </div>
                 <div class="sign-in-htm">
                     <div class="group">
                         <label for="user" class="label">Email</label>
@@ -11,9 +14,10 @@
                                 type="email" 
                                 class="input validate" 
                                 required 
-                                name="email" 
+                                formControlName="email" 
                                 [(ngModel)]="signInUser.email">
                     </div>
+                    <app-error-label [control]="f.get('email')"></app-error-label>
                     <div class="group">
                         <label for="pass" class="label">Password</label>
                         <input  id="pass" 
@@ -21,9 +25,10 @@
                                 class="input validate" 
                                 data-type="password"
                                 required
-                                name="password"
+                                formControlName="password"
                                 [(ngModel)]="signInUser.password">
                     </div>
+                    <app-error-label [control]="f.get('password')"></app-error-label>
                     <div class="group">
                         <input id="check" type="checkbox" class="check" checked>
                         <label for="check"><span class="icon"></span> Keep me Signed in</label>
@@ -35,6 +40,8 @@
                                 [disabled]="!(f.valid)"
                                 [ngClass]="{'disabled':!(f.valid)}">
                     </div>
+                    <app-error-label [control]="f"></app-error-label>
+
                     <div class="hr"></div>
                     <div class="foot-lnk">
                         <a [routerLink] =  "['/signup']">Register?</a>

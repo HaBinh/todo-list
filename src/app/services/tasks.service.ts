@@ -5,8 +5,8 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class TasksService {
-  private localUrl = 'http://localhost:3000/';
-  private tasksUrl = 'https://radiant-taiga-44344.herokuapp.com/';
+  private tasks1Url = 'http://localhost:3000/';
+  private tasksUrl = 'https://gentle-shelf-15318.herokuapp.com/';
   private headers = new Headers({
       'Content-Type': 'application/json'
     });

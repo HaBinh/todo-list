@@ -3,7 +3,7 @@
         <input id="tab-1" type="radio" name="tab" class="sign-in"><a [routerLink] =  "['/login']" class="tab">Log In</a>
         <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
         <div class="login-form">
-            <form (ngSubmit)="onSignUpSubmit()" #f="ngForm">
+            <form (ngSubmit)="onSignUpSubmit()" [formGroup]="f">
                 <div class="sign-up-htm">
                     <div class="group">
                         <label for="user" class="label">Email</label>
@@ -11,9 +11,10 @@
                                 type="email" 
                                 class="input validate"
                                 required
-                                name='email'
+                                formControlName='email'
                                 [(ngModel)]="signUpUser.email">
                     </div>
+                    <app-error-label [control]="f.get('email')"></app-error-label>
                     <div class="group">
                         <label for="pass" class="label">Password</label>
                         <input  id="pass" 
@@ -21,9 +22,10 @@
                                 class="input validate"
                                 data-type="password"
                                 required
-                                name='password'
+                                formControlName='password'
                                 [(ngModel)]="signUpUser.password">
                     </div>
+                    <app-error-label [control]="f.get('password')"></app-error-label>
                     <div class="group">
                         <label for="pass" class="label">Repeat Password</label>
                         <input  id="pass" 
@@ -31,9 +33,10 @@
                                 class="input validate"
                                 data-type="password"
                                 required
-                                name='password_confirmation'
+                                formControlName='passwordConfirmation'
                                 [(ngModel)]="signUpUser.passwordConfirmation">
                     </div>
+                    <app-error-label [control]="f.get('passwordConfirmation')"></app-error-label>
                     <span 
                         *ngIf="signUpUser.password !=    signUpUser.passwordConfirmation"> 
                             Passwords must match
@@ -44,9 +47,16 @@
                                 value="Sign Up"
                                 [disabled]="!(f.valid) || !(signUpUser.password == signUpUser.passwordConfirmation)">
                     </div>
+                    <app-error-label [control]="f"></app-error-label>
+<div *ngIf="(loading$ | async)" class="col-md-12">
+  <div class="spinner">
+    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
-                        <label [routerLink] =  "['/login']">Already Member?</label>
+                        <a [routerLink] =  "['/login']">Already Member?</a>
                     </div>
                 </div>
             </form>

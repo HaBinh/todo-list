@@ -10,8 +10,10 @@ import { APP_BASE_HREF,
          HashLocationStrategy } from '@angular/common';
 import { MdProgressBarModule, 
          MdButtonModule }       from '@angular/material';
+
 import { Angular2TokenService } from 'angular2-token';
 import {AuthService}            from "./services/auth.service";
+import { SharedModule }         from './components/shared/shared.module';
 
 import { AppComponent }         from './app.component';
 import { TasksComponent }       from './components/tasks/tasks.component';
@@ -19,6 +21,8 @@ import { ListsComponent }       from './components/lists/lists.component';
 import { HomeComponent }        from './components/home/home.component';
 import { SignupComponent }      from './components/user/signup/signup.component';
 import { LoginComponent }       from './components/user/login/login.component';
+import { NavbarComponent }      from './components/navbar/navbar.component';
+
 
 const routes: Routes = [
     { path: '',          component: HomeComponent},
@@ -35,7 +39,8 @@ const routes: Routes = [
     TasksComponent,
     HomeComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,7 @@ const routes: Routes = [
     HttpModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
+    SharedModule,
     MdButtonModule,
     MdProgressBarModule
   ],
